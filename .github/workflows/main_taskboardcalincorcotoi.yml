@@ -23,6 +23,17 @@ jobs:
         with:
           dotnet-version: '9.x'
 
+      - name: Set up node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install deps and build client app
+        run: |
+          cd client
+          npm install --legacy-peer-deps
+          npm run build
+
       - name: Build with dotnet
         run: dotnet build --configuration Release
 

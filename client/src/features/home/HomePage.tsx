@@ -11,7 +11,7 @@ export default function HomePage() {
             <Paper sx={{ p: 6, textAlign: 'center', borderRadius: 3, mt: 4 }}>
                 <Dashboard sx={{ fontSize: 80, color: 'primary.main', mb: 2 }} />
                 <Typography variant="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
-                    TaskBoard
+                    TaskBoard Test
                 </Typography>
                 <Typography variant="h6" color="text.secondary" sx={{ mb: 4 }}>
                     Real-Time Collaborative Task Management.
