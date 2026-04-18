@@ -1,0 +1,48 @@
+{
+  "name": "client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@fontsource/roboto": "^5.2.10",
+    "@hello-pangea/dnd": "^18.0.1",
+    "@hookform/resolvers": "^5.2.2",
+    "@microsoft/signalr": "^10.0.0",
+    "@mui/icons-material": "^9.0.0",
+    "@mui/lab": "^9.0.0-beta.2",
+    "@mui/material": "^9.0.0",
+    "@reduxjs/toolkit": "^2.11.2",
+    "date-fns": "^4.1.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-hook-form": "^7.72.1",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.14.1",
+    "react-toastify": "^11.0.5",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "@types/node": "^24.12.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "@vitejs/plugin-react-swc": "^4.3.0",
+    "eslint": "^9.39.4",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.4.0",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.58.0",
+    "vite": "^8.0.4",
+    "vite-plugin-mkcert": "^2.0.0"
+  }
+}
