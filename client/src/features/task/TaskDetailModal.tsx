@@ -19,7 +19,7 @@ interface Props {
     boardId: number;
 }
 
-export default function TaskDetailModal({ task, open, onClose, boardId }: Props) {
+export default function TaskDetailModal({ task, open, onClose, boardId: _boardId }: Props) {
     const [editing, setEditing] = useState(false);
     const [updateTask] = useUpdateTaskMutation();
     const [deleteTask] = useDeleteTaskMutation();
@@ -98,7 +98,7 @@ export default function TaskDetailModal({ task, open, onClose, boardId }: Props)
                             label="Due Date"
                             type="date"
                             fullWidth
-                            InputLabelProps={{ shrink: true }}
+                            slotProps={{ inputLabel: { shrink: true } }}
                             {...register('dueDate')}
                         />
                         <TextField
@@ -114,7 +114,7 @@ export default function TaskDetailModal({ task, open, onClose, boardId }: Props)
                 </Box>
             ) : (
                 <DialogContent>
-                    <Box display='flex' alignItems='center' gap={1} mb={2}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                         <Chip
                             label={task.status}
                             color={
@@ -135,23 +135,23 @@ export default function TaskDetailModal({ task, open, onClose, boardId }: Props)
                         </>
                     )}
 
-                    <Box display='flex' flexDirection='column' gap={1.5}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                         {task.assigneeEmail && (
-                            <Typography variant="body2" display='flex' alignItems='center' gap={1}>
+                            <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                 <Person fontSize="small" color="action" />
                                 Assignee: {task.assigneeEmail}
                             </Typography>
                         )}
                         {task.dueDate && (
-                            <Typography variant="body2" display='flex' alignItems='center' gap={1}>
+                            <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                 <AccessTime fontSize="small" color="action" />
                                 Due: {format(new Date(task.dueDate), 'MMMM d, yyyy')}
                             </Typography>
                         )}
                         {labels.length > 0 && (
-                            <Box display='flex' alignItems='center' gap={1}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                 <Label fontSize="small" color="action" />
-                                <Box display='flex' gap={0.5} flexWrap='wrap'>
+                                <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
                                     {labels.map((label, i) => (
                                         <Chip key={i} label={label.trim()} size="small" />
                                     ))}

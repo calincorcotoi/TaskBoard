@@ -92,8 +92,8 @@ export default function DashboardPage() {
 
     return (
         <Box>
-            <Box display='flex' justifyContent='space-between' alignItems='center' mb={3}>
-                <Typography variant="h4" fontWeight='bold'>My Workspaces</Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+                <Typography variant="h4" sx={{ fontWeight: 'bold' }}>My Workspaces</Typography>
                 <Button variant="contained" startIcon={<Add />} onClick={openCreateDialog}>
                     New Workspace
                 </Button>
@@ -105,10 +105,12 @@ export default function DashboardPage() {
                 value={searchTerm}
                 onChange={(e) => handleSearch(e.target.value)}
                 sx={{ mb: 3 }}
-                InputProps={{
-                    startAdornment: (
-                        <InputAdornment position="start"><Search /></InputAdornment>
-                    )
+                slotProps={{
+                    input: {
+                        startAdornment: (
+                            <InputAdornment position="start"><Search /></InputAdornment>
+                        )
+                    }
                 }}
             />
 
@@ -131,7 +133,7 @@ export default function DashboardPage() {
             </Grid>
 
             {workspaces?.length === 0 && !isLoading && (
-                <Typography textAlign='center' color='text.secondary' sx={{ mt: 4 }}>
+                <Typography sx={{ textAlign: 'center', mt: 4 }} color='text.secondary'>
                     No workspaces found. Create one to get started!
                 </Typography>
             )}
@@ -211,15 +213,15 @@ function WorkspaceCard({
         <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <Card sx={{ borderRadius: 2, height: '100%' }}>
                 <CardContent sx={{ cursor: 'pointer' }} onClick={onToggleExpand}>
-                    <Typography variant="h6" fontWeight='bold'>{workspace.name}</Typography>
+                    <Typography variant="h6" sx={{ fontWeight: 'bold' }}>{workspace.name}</Typography>
                     <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
                         {workspace.description || 'No description'}
                     </Typography>
-                    <Box display='flex' gap={2}>
-                        <Typography variant="caption" display='flex' alignItems='center' gap={0.5}>
+                    <Box sx={{ display: 'flex', gap: 2 }}>
+                        <Typography variant="caption" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                             <Group fontSize="small" /> {workspace.memberCount} members
                         </Typography>
-                        <Typography variant="caption" display='flex' alignItems='center' gap={0.5}>
+                        <Typography variant="caption" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                             <ViewKanban fontSize="small" /> {workspace.boardCount} boards
                         </Typography>
                     </Box>
@@ -229,7 +231,7 @@ function WorkspaceCard({
                     <CardContent sx={{ pt: 0 }}>
                         <Typography variant="subtitle2" sx={{ mb: 1 }}>Boards:</Typography>
                         {boards?.map(board => (
-                            <Box key={board.id} display='flex' justifyContent='space-between' alignItems='center' sx={{ py: 0.5 }}>
+                            <Box key={board.id} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', py: 0.5 }}>
                                 <Typography
                                     variant="body2"
                                     sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}

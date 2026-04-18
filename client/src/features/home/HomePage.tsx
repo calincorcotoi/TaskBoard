@@ -10,7 +10,7 @@ export default function HomePage() {
         <Container maxWidth="md">
             <Paper sx={{ p: 6, textAlign: 'center', borderRadius: 3, mt: 4 }}>
                 <Dashboard sx={{ fontSize: 80, color: 'primary.main', mb: 2 }} />
-                <Typography variant="h3" gutterBottom fontWeight='bold'>
+                <Typography variant="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
                     TaskBoard
                 </Typography>
                 <Typography variant="h6" color="text.secondary" sx={{ mb: 4 }}>
@@ -28,7 +28,7 @@ export default function HomePage() {
                         Go to Dashboard
                     </Button>
                 ) : (
-                    <Box display='flex' gap={2} justifyContent='center'>
+                    <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
                         <Button
                             variant="contained"
                             size="large"

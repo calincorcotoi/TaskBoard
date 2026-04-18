@@ -19,14 +19,14 @@ export default function NavBar() {
                 <LinearProgress color="secondary" sx={{ position: 'absolute', bottom: 0, width: '100%' }} />
             )}
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Box display='flex' alignItems='center' gap={1} component={Link} to='/'>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }} component={Link} to='/'>
                     <Dashboard />
                     <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
                         TaskBoard
                     </Typography>
                 </Box>
 
-                <Box display='flex' alignItems='center' gap={1}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                     {user && (
                         <Typography
                             component={Link}
@@ -39,7 +39,7 @@ export default function NavBar() {
                     )}
                 </Box>
 
-                <Box display='flex' alignItems='center'>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <IconButton onClick={() => dispatch(setDarkMode())}>
                         {darkMode ? <DarkMode /> : <LightMode sx={{ color: 'yellow' }} />}
                     </IconButton>

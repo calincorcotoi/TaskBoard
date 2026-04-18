@@ -7,7 +7,7 @@ import { useSignalR } from "../../lib/hooks/useSignalR";
 
 function App() {
     const { darkMode } = useAppSelector(state => state.ui);
-    const { data: user } = useUserInfoQuery();
+    useUserInfoQuery();
     const palleteType = darkMode ? 'dark' : 'light';
     const theme = createTheme({
         palette: {

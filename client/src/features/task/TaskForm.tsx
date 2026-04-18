@@ -60,7 +60,7 @@ export default function TaskForm({ open, onClose, boardId }: Props) {
                         label="Due Date"
                         type="date"
                         fullWidth
-                        InputLabelProps={{ shrink: true }}
+                        slotProps={{ inputLabel: { shrink: true } }}
                         {...register('dueDate')}
                     />
                     <TextField

@@ -75,24 +75,26 @@ export default function BoardPage() {
 
     return (
         <Box>
-            <Box display='flex' justifyContent='space-between' alignItems='center' mb={2}>
-                <Typography variant="h4" fontWeight='bold'>{board.name}</Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                <Typography variant="h4" sx={{ fontWeight: 'bold' }}>{board.name}</Typography>
                 <Button variant="contained" startIcon={<Add />} onClick={() => setCreateDialogOpen(true)}>
                     New Task
                 </Button>
             </Box>
 
-            <Box display='flex' gap={2} mb={3} flexWrap='wrap'>
+            <Box sx={{ display: 'flex', gap: 2, mb: 3, flexWrap: 'wrap' }}>
                 <TextField
                     placeholder="Search tasks..."
                     size="small"
                     value={searchTerm}
                     onChange={(e) => handleSearch(e.target.value)}
                     sx={{ minWidth: 250 }}
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start"><Search /></InputAdornment>
-                        )
+                    slotProps={{
+                        input: {
+                            startAdornment: (
+                                <InputAdornment position="start"><Search /></InputAdornment>
+                            )
+                        }
                     }}
                 />
                 <FormControl size="small" sx={{ minWidth: 150 }}>
@@ -111,7 +113,7 @@ export default function BoardPage() {
             </Box>
 
             <DragDropContext onDragEnd={handleDragEnd}>
-                <Box display='flex' gap={2} sx={{ overflowX: 'auto', pb: 2 }}>
+                <Box sx={{ display: 'flex', gap: 2, overflowX: 'auto', pb: 2 }}>
                     {COLUMNS.map(col => (
                         <Droppable key={col.key} droppableId={col.key}>
                             {(provided, snapshot) => (
@@ -130,7 +132,7 @@ export default function BoardPage() {
                                         transition: 'background-color 0.2s'
                                     }}
                                 >
-                                    <Box display='flex' alignItems='center' gap={1} mb={2}>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                                         <Chip
                                             label={col.label}
                                             sx={{

@@ -29,7 +29,7 @@ export default function UserMenu() {
                 <MenuItem component={Link} to='/dashboard' onClick={() => setAnchorEl(null)}>
                     My Workspaces
                 </MenuItem>
-                <MenuItem onClick={() => { logout(); setAnchorEl(null); }}>
+                <MenuItem onClick={() => { logout(undefined); setAnchorEl(null); }}>
                     Logout
                 </MenuItem>
             </Menu>

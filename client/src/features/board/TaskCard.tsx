@@ -25,7 +25,7 @@ export default function TaskCard({ task, isDragging, onClick }: Props) {
             }}
         >
             <CardContent sx={{ p: 2, '&:last-child': { pb: 2 } }}>
-                <Typography variant="subtitle2" fontWeight='bold' sx={{ mb: 0.5 }}>
+                <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 0.5 }}>
                     {task.title}
                 </Typography>
 
@@ -43,21 +43,21 @@ export default function TaskCard({ task, isDragging, onClick }: Props) {
                 )}
 
                 {labels.length > 0 && (
-                    <Box display='flex' gap={0.5} flexWrap='wrap' mb={1}>
+                    <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap', mb: 1 }}>
                         {labels.map((label, i) => (
                             <Chip key={i} label={label.trim()} size="small" variant="outlined" />
                         ))}
                     </Box>
                 )}
 
-                <Box display='flex' justifyContent='space-between' alignItems='center'>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     {task.assigneeEmail && (
-                        <Typography variant="caption" display='flex' alignItems='center' gap={0.5} color="text.secondary">
+                        <Typography variant="caption" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }} color="text.secondary">
                             <Person sx={{ fontSize: 14 }} /> {task.assigneeEmail}
                         </Typography>
                     )}
                     {task.dueDate && (
-                        <Typography variant="caption" display='flex' alignItems='center' gap={0.5} color="text.secondary">
+                        <Typography variant="caption" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }} color="text.secondary">
                             <AccessTime sx={{ fontSize: 14 }} />
                             {format(new Date(task.dueDate), 'MMM d')}
                         </Typography>

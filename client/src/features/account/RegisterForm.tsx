@@ -33,7 +33,7 @@ export default function RegisterForm() {
 
     return (
         <Container component={Paper} maxWidth='sm' sx={{ borderRadius: 3 }}>
-            <Box display='flex' flexDirection='column' alignItems='center' marginTop='8'>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '8' }}>
                 <LockOutlined sx={{ mt: 3, color: 'secondary.main', fontSize: 40 }} />
                 <Typography variant="h5">
                     Register
@@ -41,11 +41,7 @@ export default function RegisterForm() {
                 <Box
                     component='form'
                     onSubmit={handleSubmit(onSubmit)}
-                    width='100%'
-                    display='flex'
-                    flexDirection='column'
-                    gap={3}
-                    marginY={3}
+                    sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 3, marginY: 3 }}
                 >
                     <TextField
                         fullWidth
