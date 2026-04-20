@@ -1,22 +1,25 @@
 import {
     Box, Button, Dialog, DialogActions, DialogContent,
-    DialogTitle, TextField
+    DialogTitle, FormControl, InputLabel, MenuItem, Select, TextField
 } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { taskSchema, type TaskSchema } from "../../lib/schemas/taskSchema";
 import { useCreateTaskMutation } from "../board/taskApi";
+import { useFetchMembersQuery } from "../dashboard/workspaceApi";
 import { toast } from "react-toastify";
 
 interface Props {
     open: boolean;
     onClose: () => void;
     boardId: number;
+    workspaceId: number;
 }
 
-export default function TaskForm({ open, onClose, boardId }: Props) {
+export default function TaskForm({ open, onClose, boardId, workspaceId }: Props) {
     const [createTask] = useCreateTaskMutation();
-    const { register, handleSubmit, reset, formState: { errors } } = useForm<TaskSchema>({
+    const { data: members } = useFetchMembersQuery(workspaceId);
+    const { register, handleSubmit, reset, control, formState: { errors } } = useForm<TaskSchema>({
         mode: 'onTouched',
         resolver: zodResolver(taskSchema)
     });
@@ -51,10 +54,28 @@ export default function TaskForm({ open, onClose, boardId }: Props) {
                         rows={3}
                         {...register('description')}
                     />
-                    <TextField
-                        label="Assignee ID (optional)"
-                        fullWidth
-                        {...register('assigneeId')}
+                    <Controller
+                        name="assigneeId"
+                        control={control}
+                        defaultValue=""
+                        render={({ field }) => (
+                            <FormControl fullWidth>
+                                <InputLabel>Assignee</InputLabel>
+                                <Select
+                                    {...field}
+                                    label="Assignee"
+                                >
+                                    <MenuItem value="">
+                                        <em>Unassigned</em>
+                                    </MenuItem>
+                                    {members?.map(m => (
+                                        <MenuItem key={m.userId} value={m.userId}>
+                                            {m.email}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        )}
                     />
                     <TextField
                         label="Due Date"

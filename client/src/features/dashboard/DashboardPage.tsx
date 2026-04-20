@@ -1,19 +1,21 @@
 import { useState } from "react";
 import {
-    Box, Button, Card, CardActions, CardContent, Dialog, DialogActions,
-    DialogContent, DialogTitle, Grid, IconButton, InputAdornment,
-    TextField, Typography
+    Autocomplete, Box, Button, Card, CardActions, CardContent, Chip, Dialog, DialogActions,
+    DialogContent, DialogTitle, Divider, Grid, IconButton, InputAdornment,
+    List, ListItem, ListItemText, TextField, Typography
 } from "@mui/material";
-import { Add, Delete, Edit, Group, Search, ViewKanban } from "@mui/icons-material";
+import { Add, Delete, Edit, Group, PersonRemove, Search, ViewKanban } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { workspaceSchema, type WorkspaceSchema } from "../../lib/schemas/workspaceSchema";
 import {
-    useCreateWorkspaceMutation, useDeleteWorkspaceMutation,
-    useFetchWorkspacesQuery, useUpdateWorkspaceMutation
+    useAddMemberMutation, useCreateWorkspaceMutation, useDeleteWorkspaceMutation,
+    useFetchMembersQuery, useFetchWorkspacesQuery, useRemoveMemberMutation,
+    useUpdateWorkspaceMutation
 } from "./workspaceApi";
 import { useFetchBoardsQuery, useCreateBoardMutation, useDeleteBoardMutation } from "../board/boardApi";
+import { useFetchAllUsersQuery } from "../account/accountApi";
 import type { Workspace } from "../../app/models/workspace";
 import { toast } from "react-toastify";
 
@@ -168,6 +170,13 @@ export default function DashboardPage() {
                         </Button>
                     </DialogActions>
                 </Box>
+
+                {editingWorkspace && (
+                    <>
+                        <Divider />
+                        <MembersSection workspaceId={editingWorkspace.id} />
+                    </>
+                )}
             </Dialog>
 
             {/* Board Dialog */}
@@ -256,5 +265,71 @@ function WorkspaceCard({
                 </CardActions>
             </Card>
         </Grid>
+    );
+}
+
+function MembersSection({ workspaceId }: { workspaceId: number }) {
+    const { data: members } = useFetchMembersQuery(workspaceId);
+    const { data: allUsers } = useFetchAllUsersQuery();
+    const [addMember] = useAddMemberMutation();
+    const [removeMember] = useRemoveMemberMutation();
+
+    const memberUserIds = new Set(members?.map(m => m.userId) || []);
+    const availableUsers = (allUsers || []).filter(u => !memberUserIds.has(u.id));
+
+    const handleAddMember = async (email: string) => {
+        await addMember({ workspaceId, email });
+        toast.success('Member added');
+    };
+
+    const handleRemoveMember = async (memberId: string) => {
+        await removeMember({ workspaceId, memberId });
+        toast.success('Member removed');
+    };
+
+    return (
+        <DialogContent>
+            <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mb: 1 }}>Members</Typography>
+
+            <List dense disablePadding>
+                {members?.map(m => (
+                    <ListItem
+                        key={m.userId}
+                        secondaryAction={
+                            m.role !== 'Owner' && (
+                                <IconButton edge="end" size="small" onClick={() => handleRemoveMember(m.userId)}>
+                                    <PersonRemove fontSize="small" />
+                                </IconButton>
+                            )
+                        }
+                        sx={{ px: 0 }}
+                    >
+                        <ListItemText
+                            primary={m.email}
+                            secondary={
+                                <Chip label={m.role} size="small" color={m.role === 'Owner' ? 'primary' : 'default'} />
+                            }
+                        />
+                    </ListItem>
+                ))}
+            </List>
+
+            <Divider sx={{ my: 2 }} />
+
+            <Typography variant="subtitle2" sx={{ mb: 1 }}>Add member</Typography>
+            <Autocomplete
+                options={availableUsers}
+                getOptionLabel={(option) => option.email}
+                renderInput={(params) => (
+                    <TextField {...params} placeholder="Search users..." size="small" />
+                )}
+                onChange={(_event, value) => {
+                    if (value) handleAddMember(value.email);
+                }}
+                value={null}
+                blurOnSelect
+                noOptionsText="No users available"
+            />
+        </DialogContent>
     );
 }

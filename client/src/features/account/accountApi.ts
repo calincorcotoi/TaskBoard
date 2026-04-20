@@ -56,9 +56,12 @@ export const accountApi = createApi({
                 dispatch(accountApi.util.invalidateTags(['UserInfo']));
                 router.navigate('/');
             }
+        }),
+        fetchAllUsers: builder.query<{ id: string; email: string }[], void>({
+            query: () => 'account/users'
         })
     })
 });
 
 export const { useLoginMutation, useRegisterMutation, useLogoutMutation,
-    useUserInfoQuery, useLazyUserInfoQuery } = accountApi;
+    useUserInfoQuery, useLazyUserInfoQuery, useFetchAllUsersQuery } = accountApi;

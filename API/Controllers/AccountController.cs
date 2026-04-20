@@ -3,6 +3,7 @@ using API.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
@@ -54,5 +55,16 @@ public class AccountController(SignInManager<User> signInManager) : BaseApiContr
     {
         await signInManager.SignOutAsync();
         return NoContent();
+    }
+
+    [Authorize]
+    [HttpGet("users")]
+    public async Task<ActionResult> GetAllUsers()
+    {
+        var users = await signInManager.UserManager.Users
+            .Select(u => new { u.Id, u.Email })
+            .ToListAsync();
+
+        return Ok(users);
     }
 }

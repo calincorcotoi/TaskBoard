@@ -183,6 +183,7 @@ export default function BoardPage() {
                     open={!!selectedTask}
                     onClose={() => setSelectedTask(null)}
                     boardId={Number(boardId)}
+                    workspaceId={board.workspaceId}
                 />
             )}
 
@@ -191,6 +192,7 @@ export default function BoardPage() {
                 open={createDialogOpen}
                 onClose={() => setCreateDialogOpen(false)}
                 boardId={Number(boardId)}
+                workspaceId={board.workspaceId}
             />
         </Box>
     );

@@ -1,12 +1,14 @@
 import { useState } from "react";
 import {
     Box, Button, Chip, Dialog, DialogActions, DialogContent,
-    DialogTitle, Divider, TextField, Typography
+    DialogTitle, Divider, FormControl, InputLabel, MenuItem,
+    Select, TextField, Typography
 } from "@mui/material";
 import { AccessTime, Delete, Edit, Person, Label } from "@mui/icons-material";
 import type { TaskItem } from "../../app/models/board";
 import { useDeleteTaskMutation, useUpdateTaskMutation } from "../board/taskApi";
-import { useForm } from "react-hook-form";
+import { useFetchMembersQuery } from "../dashboard/workspaceApi";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { taskSchema, type TaskSchema } from "../../lib/schemas/taskSchema";
 import { toast } from "react-toastify";
@@ -17,14 +19,16 @@ interface Props {
     open: boolean;
     onClose: () => void;
     boardId: number;
+    workspaceId: number;
 }
 
-export default function TaskDetailModal({ task, open, onClose, boardId: _boardId }: Props) {
+export default function TaskDetailModal({ task, open, onClose, boardId: _boardId, workspaceId }: Props) {
     const [editing, setEditing] = useState(false);
     const [updateTask] = useUpdateTaskMutation();
     const [deleteTask] = useDeleteTaskMutation();
+    const { data: members } = useFetchMembersQuery(workspaceId);
 
-    const { register, handleSubmit, formState: { errors } } = useForm<TaskSchema>({
+    const { register, handleSubmit, control, formState: { errors } } = useForm<TaskSchema>({
         mode: 'onTouched',
         resolver: zodResolver(taskSchema),
         defaultValues: {
@@ -89,10 +93,27 @@ export default function TaskDetailModal({ task, open, onClose, boardId: _boardId
                             rows={3}
                             {...register('description')}
                         />
-                        <TextField
-                            label="Assignee ID"
-                            fullWidth
-                            {...register('assigneeId')}
+                        <Controller
+                            name="assigneeId"
+                            control={control}
+                            render={({ field }) => (
+                                <FormControl fullWidth>
+                                    <InputLabel>Assignee</InputLabel>
+                                    <Select
+                                        {...field}
+                                        label="Assignee"
+                                    >
+                                        <MenuItem value="">
+                                            <em>Unassigned</em>
+                                        </MenuItem>
+                                        {members?.map(m => (
+                                            <MenuItem key={m.userId} value={m.userId}>
+                                                {m.email}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            )}
                         />
                         <TextField
                             label="Due Date"
