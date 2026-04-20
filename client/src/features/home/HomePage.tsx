@@ -1,5 +1,5 @@
 import { Box, Button, Container, Divider, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
-import { Dashboard, GroupWork, ViewKanban, Sync, PersonAdd, Info } from "@mui/icons-material";
+import { GroupWork, ViewKanban, Sync, PersonAdd, Info } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useUserInfoQuery } from "../account/accountApi";
 
