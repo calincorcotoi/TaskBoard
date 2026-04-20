@@ -44,10 +44,10 @@ export default function TaskDetailModal({ task, open, onClose, boardId: _boardId
         await updateTask({
             id: task.id,
             title: data.title,
-            description: data.description,
-            assigneeId: data.assigneeId,
-            dueDate: data.dueDate,
-            labels: data.labels
+            description: data.description || undefined,
+            assigneeId: data.assigneeId || undefined,
+            dueDate: data.dueDate || undefined,
+            labels: data.labels || undefined
         });
         toast.success('Task updated');
         setEditing(false);

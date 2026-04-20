@@ -26,7 +26,11 @@ export default function TaskForm({ open, onClose, boardId, workspaceId }: Props)
 
     const onSubmit = async (data: TaskSchema) => {
         await createTask({
-            ...data,
+            title: data.title,
+            description: data.description || undefined,
+            assigneeId: data.assigneeId || undefined,
+            dueDate: data.dueDate || undefined,
+            labels: data.labels || undefined,
             boardId
         });
         toast.success('Task created');
